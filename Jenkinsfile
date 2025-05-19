@@ -1,4 +1,4 @@
-pipeline{
+/*pipeline{
     agent any
     environment{
         DIRECTORY_PATH="C:/Users/CYN/Deakin Uni/SIT753-Professional Practice in IT/Task 8.1C"
@@ -67,6 +67,67 @@ pipeline{
         stage('Complete'){
             steps{
                 echo "All stages were successfully completed"
+            }
+        }
+    }
+}
+*/
+
+pipeline{
+    agent any
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/cynthiawjy135/8.2CDevSecOps.git'
+            }
+        }
+        stage('Install Dependencies') {
+            steps {
+                sh 'npm install'
+            }
+        }
+        stage('Run Tests') {
+            steps {
+                script {
+                    def testStatus = 'SUCCESS'
+                    try {
+                        sh 'npm test | tee test.log'
+                    } catch (e) {
+                        testStatus = 'FAILURE'
+                    }
+                    emailext (
+                        subject: "Test Stage: ${testStatus}",
+                        to: "prettybluesky@gmail.com",
+                        body: """<p>The Unit and Integration Test stage finished with status: <b>${testStatus}</b>.</p>""",
+                        attachmentsPattern: 'test.log',
+                        mimeType: 'text/html'
+                    )
+                }
+            }
+        }
+        stage('Generate Coverage Report') {
+            steps {
+                // Ensure coverage report exists
+                sh 'npm run coverage || true'
+            }
+        }
+        stage('NPM Audit (Security Scan)') {
+            steps {
+                script {
+                    def auditStatus = 'SUCCESS'
+                    try {
+                        sh 'npm audit | tee audit.log'
+                    } catch (e) {
+                        auditStatus = 'FAILURE'
+                    }
+                    emailext (
+                        subject: "Security Scan Stage: ${auditStatus}",
+                        to: "prettybluesky@gmail.com",
+                        body: """<p>The security scan stage completed with status: <b>${auditStatus}</b>.</p>""",
+                        attachmentsPattern: 'audit.log',
+                        mimeType: 'text/html'
+                    )
+                }
             }
         }
     }
