@@ -132,7 +132,8 @@ pipeline{
                         to: "prettybluesky135@gmail.com",
                         subject: "Security Scan Stage: ${auditStatus}",
                         body: """The security scan stage was completed with status: ${auditStatus}.""",
-                        attachmentsPattern: 'audit.log'
+                        attachmentsPattern: 'audit.log',
+                         recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']]
                     )
                     /*mail to: "prettybluesky@gmail.com",
                         subject: "Security Scan Stage: ${auditStatus}",
