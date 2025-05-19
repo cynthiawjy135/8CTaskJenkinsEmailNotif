@@ -136,18 +136,24 @@ ${testLog}
                     } catch (e) {
                         auditStatus = 'FAILURE'
                     }
-                    emailext (
+                    /*emailext (
                         to: "prettybluesky135@gmail.com",
                         subject: "Security Scan Stage: ${auditStatus}",
                         body: """The security scan stage was completed with status: ${auditStatus}.""",
                         attachmentsPattern: 'audit.log',
                         recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']]
-                    )
-                    /*mail to: "prettybluesky@gmail.com",
+                    )*/
+
+                    def auditLog = readFile('audit.log')
+
+                    mail to: "prettybluesky@gmail.com",
                         subject: "Security Scan Stage: ${auditStatus}",
-                        body: """<p>The security scan stage completed with status: <b>${auditStatus}</b>.</p>""",
-                        attachmentsPattern: 'audit.log',
-                        mimeType: 'text/plain'*/
+                        body: """The security scan stage finished with status: ${auditStatus}.
+
+===== Audit Log =====
+
+${auditLog}
+"""
                 }
             }
         }
