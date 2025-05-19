@@ -103,7 +103,7 @@ pipeline{
                     emailext (
                         to: "prettybluesky135@gmail.com",
                         subject: "Test Stage: ${testStatus}",
-                        body: "The test stage finished with status: ${testStatus}. See attached test log.",
+                        body: "The testing stage finished with status: ${testStatus}. See attached test log.",
                         attachmentsPattern: 'test.log',
                         presendScript: '''
                             import javax.mail.Address
