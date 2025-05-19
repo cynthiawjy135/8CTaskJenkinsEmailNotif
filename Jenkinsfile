@@ -100,7 +100,7 @@ pipeline{
 
                     archiveArtifacts artifacts: 'test.log', onlyIfSuccessful: false
 
-                    mail (
+                    emailext (
                         to: "prettybluesky135@gmail.com",
                         subject: "Test Stage: ${testStatus}",
                         body: "The testing stage finished with status: ${testStatus}. See attached test log.",
@@ -128,7 +128,7 @@ pipeline{
                     } catch (e) {
                         auditStatus = 'FAILURE'
                     }
-                    mail (
+                    emailext (
                         to: "prettybluesky135@gmail.com",
                         subject: "Security Scan Stage: ${auditStatus}",
                         body: """The security scan stage was completed with status: ${auditStatus}.""",
