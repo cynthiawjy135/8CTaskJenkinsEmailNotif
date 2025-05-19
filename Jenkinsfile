@@ -104,13 +104,7 @@ pipeline{
                         to: "prettybluesky135@gmail.com",
                         subject: "Test Stage: ${testStatus}",
                         body: "The testing stage finished with status: ${testStatus}. See attached test log.",
-                        attachmentsPattern: 'test.log',
-                        presendScript: '''
-                            import jakarta.mail.Address
-                            import jakarta.mail.Message
-                            import jakarta.mail.internet.InternetAddress
-                            msg.setRecipients(javax.mail.Message.RecipientType.TO, [new InternetAddress("prettybluesky135@gmail.com")] as Address[])
-                        '''
+                        attachmentsPattern: 'test.log'
                     )
                     /*mail to: "prettybluesky135@gmail.com",
                          subject: "Test Stage: ${testStatus}",
@@ -138,13 +132,7 @@ pipeline{
                         to: "prettybluesky135@gmail.com",
                         subject: "Security Scan Stage: ${auditStatus}",
                         body: """The security scan stage was completed with status: ${auditStatus}.""",
-                        attachmentsPattern: 'audit.log',
-                        presendScript: '''
-                            import jakarta.mail.Address
-                            import jakarta.mail.Message
-                            import jakarta.mail.internet.InternetAddress
-                            msg.setRecipients(javax.mail.Message.RecipientType.TO, [new InternetAddress("prettybluesky135@gmail.com")] as Address[])
-                        '''
+                        attachmentsPattern: 'audit.log'
                     )
                     /*mail to: "prettybluesky@gmail.com",
                         subject: "Security Scan Stage: ${auditStatus}",
