@@ -18,10 +18,16 @@ pipeline{
                 echo "Run integration test using Jest to ensure the components in web app work together as expected"
             }
             post{
-                    success{
-                        mail to: "prettybluesky@gmail.com",
-                        subject: "Testing Status Notification",
-                        body: "Unit Test and Integration Test was successful"
+                    always{
+                        script {
+                            def status = currentBuild.currentResult
+                            def logFile = "unit_test_log.txt"
+                            sh "echo 'Dummy log content for Unit and Integration Test' > ${logFile}"
+                            mail to: 'prettybluesky@gmail.com',
+                                 subject: "Unit and Integration Test - ${status}",
+                                 body: "The Unit and Integration Test stage finished with status: ${status}. See attached log.",
+                                 attachmentsPattern: logFile
+                        }
                     }
             }
         }
@@ -33,6 +39,19 @@ pipeline{
         stage('Security Scan'){
             steps{
                 echo "Perform a security scan on the code using npm audit to identify vulnerabilities in npm dependencies"
+            }
+            post {
+                always {
+                    script {
+                        def status = currentBuild.currentResult
+                        def logFile = "security_scan_log.txt"
+                        sh "echo 'Dummy log content for Security Scan' > ${logFile}"
+                        mail to: 'prettybluesky@gmail.com',
+                             subject: "Security Scan - ${status}",
+                             body: "The Security Scan stage finished with status: ${status}. See attached log.",
+                             attachmentsPattern: logFile
+                    }
+                }
             }
         }
         stage('Integration Test on Staging'){
