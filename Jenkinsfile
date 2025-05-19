@@ -20,7 +20,7 @@ pipeline{
             post{
                     success{
                         mail to: "prettybluesky@gmail.com",
-                        subject: "Testing Status Email",
+                        subject: "Testing Status Result Email",
                         body: "Unit Test and Integration Test was successful"
                     }
             }
