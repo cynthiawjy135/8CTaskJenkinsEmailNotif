@@ -131,7 +131,7 @@ pipeline{
                     emailext (
                         to: "prettybluesky135@gmail.com",
                         subject: "Security Scan Stage: ${auditStatus}",
-                        body: """The security scan stage completed with status: ${auditStatus}.""",
+                        body: """The security scan stage was completed with status: ${auditStatus}.""",
                         attachmentsPattern: 'audit.log'
                     )
                     /*mail to: "prettybluesky@gmail.com",
