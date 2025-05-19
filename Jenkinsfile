@@ -18,7 +18,7 @@ pipeline{
                 echo "Run integration test using Jest to ensure the components in web app work together as expected"
             }
             post{
-                    always{
+                    success{
                         mail to: "prettybluesky@gmail.com",
                         subject: "Testing Status Notification",
                         body: "Unit Test and Integration Test was successful"
