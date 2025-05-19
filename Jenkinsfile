@@ -91,10 +91,11 @@ pipeline{
                 script {
                     def testStatus = 'SUCCESS'
                     try {
-                        sh 'npm test | tee test.log'
+                        sh 'npm test > test.log 2>&1'
                     } catch (e) {
                         testStatus = 'FAILURE'
                     }
+                    sh 'ls -lh test.log || echo "test.log not found"'
                     mail to: "prettybluesky@gmail.com",
                         subject: "Test Stage: ${testStatus}",
                         body: """<p>The Unit and Integration Test stage finished with status: <b>${testStatus}</b>.</p>""",
