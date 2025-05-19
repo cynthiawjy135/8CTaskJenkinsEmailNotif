@@ -96,9 +96,9 @@ pipeline{
                         testStatus = 'FAILURE'
                     }
 
-                    sh 'ls -lh test.log'
+                    /*sh 'ls -lh test.log'
 
-                    archiveArtifacts artifacts: 'test.log', onlyIfSuccessful: false
+                    archiveArtifacts artifacts: 'test.log', onlyIfSuccessful: false*/
 
                     /*emailext (
                         to: "prettybluesky135@gmail.com",
@@ -107,6 +107,9 @@ pipeline{
                         attachmentsPattern: 'test.log',
                         recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']]
                     )*/
+
+                    def testLog = readFile('test.log')
+
                     mail to: "prettybluesky135@gmail.com",
                          subject: "Test Stage: ${testStatus}",
                         body: """The test stage finished with status: ${testStatus}.
