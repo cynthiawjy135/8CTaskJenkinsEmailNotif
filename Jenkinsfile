@@ -100,10 +100,16 @@ pipeline{
 
                     archiveArtifacts artifacts: 'test.log', onlyIfSuccessful: false
 
-                    mail to: "prettybluesky135@gmail.com",
+                    emailext (
+                        to: "prettybluesky135@gmail.com",
+                        subject: "Test Stage: ${testStatus}",
+                        body: "The test stage finished with status: ${testStatus}. See attached test log.",
+                        attachmentsPattern: 'test.log'
+                    )
+                    /*mail to: "prettybluesky135@gmail.com",
                          subject: "Test Stage: ${testStatus}",
                          body: "The test stage finished with status: ${testStatus}. See attached test log.",
-                         attachmentsPattern: 'test.log'
+                         attachmentsPattern: 'test.log'*/
                 }
             }
         }
@@ -122,11 +128,17 @@ pipeline{
                     } catch (e) {
                         auditStatus = 'FAILURE'
                     }
-                    mail to: "prettybluesky@gmail.com",
+                    emailext (
+                        to: "prettybluesky135@gmail.com",
+                        subject: "Security Scan Stage: ${auditStatus}",
+                        body: """The security scan stage completed with status: ${auditStatus}.""",
+                        attachmentsPattern: 'audit.log'
+                    )
+                    /*mail to: "prettybluesky@gmail.com",
                         subject: "Security Scan Stage: ${auditStatus}",
                         body: """<p>The security scan stage completed with status: <b>${auditStatus}</b>.</p>""",
                         attachmentsPattern: 'audit.log',
-                        mimeType: 'text/plain'
+                        mimeType: 'text/plain'*/
                 }
             }
         }
