@@ -91,16 +91,23 @@ pipeline{
                 script {
                     def testStatus = 'SUCCESS'
                     try {
-                        sh 'npm test > test.log 2>&1'
+                        // Jalankan test dan simpan output ke file log
+                        sh 'npm test | tee test.log'
                     } catch (e) {
                         testStatus = 'FAILURE'
                     }
-                    sh 'ls -lh test.log || echo "test.log not found"'
-                    mail to: "prettybluesky@gmail.com",
-                        subject: "Test Stage: ${testStatus}",
-                        body: """<p>The Unit and Integration Test stage finished with status: <b>${testStatus}</b>.</p>""",
-                        attachmentsPattern: 'test.log',
-                        mimeType: 'text/plain'
+
+                    // Verifikasi file log ada
+                    sh 'ls -lh test.log'
+
+                    // Archive log sebagai artifact
+                    archiveArtifacts artifacts: 'test.log', onlyIfSuccessful: false
+
+                    // Kirim email dengan lampiran file log
+                    mail to: "prettybluesky135@gmail.com",
+                         subject: "Test Stage: ${testStatus}",
+                         body: "The test stage finished with status: ${testStatus}. See attached test log.",
+                         attachmentsPattern: 'test.log'
                 }
             }
         }
