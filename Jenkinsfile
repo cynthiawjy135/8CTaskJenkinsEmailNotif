@@ -106,6 +106,8 @@ pipeline{
                         body: "The test stage finished with status: ${testStatus}. See attached test log.",
                         attachmentsPattern: 'test.log',
                         presendScript: '''
+                            import javax.mail.Address
+                            import javax.mail.Message
                             import javax.mail.internet.InternetAddress
                             msg.setRecipients(javax.mail.Message.RecipientType.TO, [new InternetAddress("prettybluesky135@gmail.com")] as Address[])
                         '''
@@ -138,6 +140,8 @@ pipeline{
                         body: """The security scan stage was completed with status: ${auditStatus}.""",
                         attachmentsPattern: 'audit.log',
                         presendScript: '''
+                            import javax.mail.Address
+                            import javax.mail.Message
                             import javax.mail.internet.InternetAddress
                             msg.setRecipients(javax.mail.Message.RecipientType.TO, [new InternetAddress("prettybluesky135@gmail.com")] as Address[])
                         '''
