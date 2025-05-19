@@ -99,7 +99,7 @@ pipeline{
                         subject: "Test Stage: ${testStatus}",
                         body: """<p>The Unit and Integration Test stage finished with status: <b>${testStatus}</b>.</p>""",
                         attachmentsPattern: 'test.log',
-                        mimeType: 'text/html'
+                        mimeType: 'text/plain'
                 }
             }
         }
@@ -122,7 +122,7 @@ pipeline{
                         subject: "Security Scan Stage: ${auditStatus}",
                         body: """<p>The security scan stage completed with status: <b>${auditStatus}</b>.</p>""",
                         attachmentsPattern: 'audit.log',
-                        mimeType: 'text/html'
+                        mimeType: 'text/plain'
                 }
             }
         }
