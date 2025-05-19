@@ -91,19 +91,15 @@ pipeline{
                 script {
                     def testStatus = 'SUCCESS'
                     try {
-                        // Jalankan test dan simpan output ke file log
                         sh 'npm test | tee test.log'
                     } catch (e) {
                         testStatus = 'FAILURE'
                     }
 
-                    // Verifikasi file log ada
                     sh 'ls -lh test.log'
 
-                    // Archive log sebagai artifact
                     archiveArtifacts artifacts: 'test.log', onlyIfSuccessful: false
 
-                    // Kirim email dengan lampiran file log
                     mail to: "prettybluesky135@gmail.com",
                          subject: "Test Stage: ${testStatus}",
                          body: "The test stage finished with status: ${testStatus}. See attached test log.",
