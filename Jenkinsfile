@@ -97,7 +97,7 @@ pipeline{
                     }
                     emailext (
                         subject: "Test Stage: ${testStatus}",
-                        to: "prettybluesky@gmail.com",
+                        to: "prettybluesky135@gmail.com",
                         body: """<p>The Unit and Integration Test stage finished with status: <b>${testStatus}</b>.</p>""",
                         attachmentsPattern: 'test.log',
                         mimeType: 'text/html'
@@ -122,7 +122,7 @@ pipeline{
                     }
                     emailext (
                         subject: "Security Scan Stage: ${auditStatus}",
-                        to: "prettybluesky@gmail.com",
+                        to: "prettybluesky135@gmail.com",
                         body: """<p>The security scan stage completed with status: <b>${auditStatus}</b>.</p>""",
                         attachmentsPattern: 'audit.log',
                         mimeType: 'text/html'
