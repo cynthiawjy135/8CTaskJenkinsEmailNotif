@@ -23,22 +23,12 @@ pipeline{
             }
             post{
                     always{
-                        //script {
-                            //def status = currentBuild.currentResult
-                            //def logFile = "unit_test_log.txt"
-
-                            //sh "echo 'Dummy log content for Unit and Integration Test' > ${logFile}"
                             emailext (
                                 to: 'prettybluesky135@gmail.com',
                                 subject: "Unit and Integration Test - ${currentBuild.currentResult}",
                                 body: "The Unit and Integration Test stage finished with status: ${currentBuild.currentResult}. See attached log.",
                                 attachLog: true
                             )
-                            // mail to: 'prettybluesky@gmail.com',
-                            //      subject: "Unit and Integration Test - ${status}",
-                            //      body: "The Unit and Integration Test stage finished with status: ${status}. See attached log.",
-                            //      attachmentsPattern: logFile
-                        //}
                     }
             }
         }
@@ -50,18 +40,26 @@ pipeline{
         stage('Security Scan'){
             steps{
                 echo "Perform a security scan on the code using npm audit to identify vulnerabilities in npm dependencies"
+                sh 'echo Running npm audit...' 
+            }
+            post{
+                    always{
+                            emailext (
+                                to: 'prettybluesky135@gmail.com',
+                                subject: "Unit and Integration Test - ${currentBuild.currentResult}",
+                                body: "The Unit and Integration Test stage finished with status: ${currentBuild.currentResult}. See attached log.",
+                                attachLog: true
+                            )
+                    }
             }
             post {
                 always {
-                    script {
-                        def status = currentBuild.currentResult
-                        def logFile = "security_scan_log.txt"
-                        sh "echo 'Dummy log content for Security Scan' > ${logFile}"
-                        mail to: 'prettybluesky@gmail.com',
-                             subject: "Security Scan - ${status}",
-                             body: "The Security Scan stage finished with status: ${status}. See attached log.",
-                             attachmentsPattern: logFile
-                    }
+                        emailext (
+                                to: 'prettybluesky135@gmail.com',
+                                subject: "Security Scan - ${currentBuild.currentResult}",
+                                body: "The Security Scan stage finished with status: ${currentBuild.currentResult}. See attached log.",
+                                attachLog: true
+                        )
                 }
             }
         }
