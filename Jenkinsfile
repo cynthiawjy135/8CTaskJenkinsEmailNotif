@@ -42,16 +42,6 @@ pipeline{
                 echo "Perform a security scan on the code using npm audit to identify vulnerabilities in npm dependencies"
                 sh 'echo Running npm audit...' 
             }
-            post{
-                    always{
-                            emailext (
-                                to: 'prettybluesky135@gmail.com',
-                                subject: "Unit and Integration Test - ${currentBuild.currentResult}",
-                                body: "The Unit and Integration Test stage finished with status: ${currentBuild.currentResult}. See attached log.",
-                                attachLog: true
-                            )
-                    }
-            }
             post {
                 always {
                         emailext (
