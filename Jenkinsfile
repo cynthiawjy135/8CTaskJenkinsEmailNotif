@@ -30,8 +30,8 @@ pipeline{
                             //sh "echo 'Dummy log content for Unit and Integration Test' > ${logFile}"
                             emailext (
                                 to: 'prettybluesky135@gmail.com',
-                                subject: "Unit and Integration Test - ${currentBuild.result}",
-                                body: "The Unit and Integration Test stage finished with status: ${currentBuild.result}. See attached log.",
+                                subject: "Unit and Integration Test - ${currentBuild.currentResult}",
+                                body: "The Unit and Integration Test stage finished with status: ${currentBuild.currentResult}. See attached log.",
                                 attachLog: true
                             )
                             // mail to: 'prettybluesky@gmail.com',
