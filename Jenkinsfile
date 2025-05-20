@@ -86,16 +86,16 @@ pipeline{
                 sh 'npm install'
             }
         }
-        stage('Run Tests') {
-            steps {
-                script {
-                    def testStatus = 'SUCCESS'
-                    try {
-                        echo 'DOing test using Mocha and Chai'
-                        //sh 'npm test | tee test.log'
-                    } catch (e) {
-                        testStatus = 'FAILURE'
-                    }
+        // stage('Run Tests') {
+        //     steps {
+        //         script {
+        //             def testStatus = 'SUCCESS'
+        //             try {
+        //                 echo 'Doing test using Mocha and Chai'
+        //                 //sh 'npm test | tee test.log'
+        //             } catch (e) {
+        //                 testStatus = 'FAILURE'
+        //             }
 
                     /*sh 'ls -lh test.log'
 
@@ -120,8 +120,33 @@ pipeline{
 
 ${testLog}
 """*/
+            //     }
+            // }post {
+            //     always {
+            //         emailext(
+            //             subject: "Jenkins Job - Integration Tests on Staging: ${currentBuild.result}",
+            //             body: "The 'Integration Tests on Staging' stage has completed with status: ${currentBuild.result}",
+            //             to: "prettybluesky135@gmail.com",
+            //             attachLog: true
+            //         )
+            //     }
+            // }
+
+        //}
+        stage('Run Tests') {
+            steps {
+                script {
+                    def testStatus = 'SUCCESS'
+                    try {
+                        echo 'Doing test using Mocha and Chai'
+                        //sh 'npm test | tee test.log'
+                    } catch (e) {
+                        testStatus = 'FAILURE'
+                    }
+
                 }
-            }post {
+            }
+            post {
                 always {
                     emailext(
                         subject: "Jenkins Job - Integration Tests on Staging: ${currentBuild.result}",
@@ -131,7 +156,6 @@ ${testLog}
                     )
                 }
             }
-
         }
         stage('Generate Coverage Report') {
             steps {
