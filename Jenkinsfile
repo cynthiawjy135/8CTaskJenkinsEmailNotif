@@ -14,26 +14,31 @@ pipeline{
         }
         stage('Unit and Integration Test'){
             steps{
-                echo "Run unit test using Mocha and Chai to ensure the code functions as expected"
-                echo "Run integration test using Jest to ensure the components in web app work together as expected"
+                script{
+                    echo "Run unit test using Mocha and Chai to ensure the code functions as expected"
+                    echo "Run integration test using Jest to ensure the components in web app work together as expected"
+                    sh 'echo Running Jest and test...' 
+                }
+                
             }
             post{
                     always{
-                        script {
-                            def status = currentBuild.currentResult
-                            def logFile = "unit_test_log.txt"
-                            sh "echo 'Dummy log content for Unit and Integration Test' > ${logFile}"
+                        //script {
+                            //def status = currentBuild.currentResult
+                            //def logFile = "unit_test_log.txt"
+
+                            //sh "echo 'Dummy log content for Unit and Integration Test' > ${logFile}"
                             emailext (
                                 to: 'prettybluesky135@gmail.com',
-                                subject: "Unit and Integration Test - ${status}",
-                                body: "The Unit and Integration Test stage finished with status: ${status}. See attached log.",
+                                subject: "Unit and Integration Test - ${currentBuild.result}",
+                                body: "The Unit and Integration Test stage finished with status: ${currentBuild.result}. See attached log.",
                                 attachLog: true
                             )
                             // mail to: 'prettybluesky@gmail.com',
                             //      subject: "Unit and Integration Test - ${status}",
                             //      body: "The Unit and Integration Test stage finished with status: ${status}. See attached log.",
                             //      attachmentsPattern: logFile
-                        }
+                        //}
                     }
             }
         }
