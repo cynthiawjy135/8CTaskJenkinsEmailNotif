@@ -149,8 +149,8 @@ ${testLog}
             post {
                 always {
                     emailext(
-                        subject: "Jenkins Job - Integration Tests on Staging: ${testStatus}",
-                        body: "The 'Integration Tests on Staging' stage has completed with status: ${testStatus}",
+                        subject: "Jenkins Job - Integration Tests on Staging: ${currentBuild.result}",
+                        body: "The 'Integration Tests on Staging' stage has completed with status: ${currentBuild.result}",
                         to: "prettybluesky135@gmail.com",
                         attachLog: true
                     )
