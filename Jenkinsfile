@@ -1,4 +1,4 @@
-/*pipeline{
+pipeline{
     agent any
     environment{
         DIRECTORY_PATH="C:/Users/CYN/Deakin Uni/SIT753-Professional Practice in IT/Task 8.1C"
@@ -71,9 +71,9 @@
         }
     }
 }
-*/
 
-pipeline{
+
+/*pipeline{
     agent any
     stages {
         stage('Checkout') {
@@ -133,6 +133,7 @@ ${testLog}
             // }
 
         //}
+        /*
         stage('Run Tests') {
             steps {
                 script {
@@ -179,7 +180,7 @@ ${testLog}
                         attachmentsPattern: 'audit.log',
                         recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']]
                     )*/
-
+/*
                     def auditLog = readFile('audit.log')
 
                     mail to: "prettybluesky@gmail.com",
@@ -195,3 +196,4 @@ ${auditLog}
         }
     }
 }
+*/
