@@ -23,10 +23,16 @@ pipeline{
                             def status = currentBuild.currentResult
                             def logFile = "unit_test_log.txt"
                             sh "echo 'Dummy log content for Unit and Integration Test' > ${logFile}"
-                            mail to: 'prettybluesky@gmail.com',
-                                 subject: "Unit and Integration Test - ${status}",
-                                 body: "The Unit and Integration Test stage finished with status: ${status}. See attached log.",
-                                 attachmentsPattern: logFile
+                            emailext (
+                                to: 'prettybluesky135@gmail.com',
+                                subject: "Unit and Integration Test - ${status}",
+                                body: "The Unit and Integration Test stage finished with status: ${status}. See attached log.",
+                                attachmentsPattern: logFile
+                            )
+                            // mail to: 'prettybluesky@gmail.com',
+                            //      subject: "Unit and Integration Test - ${status}",
+                            //      body: "The Unit and Integration Test stage finished with status: ${status}. See attached log.",
+                            //      attachmentsPattern: logFile
                         }
                     }
             }
