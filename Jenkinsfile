@@ -27,7 +27,7 @@ pipeline{
                                 to: 'prettybluesky135@gmail.com',
                                 subject: "Unit and Integration Test - ${status}",
                                 body: "The Unit and Integration Test stage finished with status: ${status}. See attached log.",
-                                attachmentsPattern: logFile
+                                attachLog: true
                             )
                             // mail to: 'prettybluesky@gmail.com',
                             //      subject: "Unit and Integration Test - ${status}",
