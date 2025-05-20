@@ -100,15 +100,16 @@ pipeline{
 
                     archiveArtifacts artifacts: 'test.log', onlyIfSuccessful: false*/
 
-                    /*emailext (
+                    emailext (
                         to: "prettybluesky135@gmail.com",
                         subject: "Test Stage: ${testStatus}",
                         body: "The testing stage finished with status: ${testStatus}. See attached test log.",
-                        attachmentsPattern: 'test.log',
-                        recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']]
-                    )*/
+                        attachLog: true
+                        //attachmentsPattern: 'test.log',
+                        //recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']]
+                    )
 
-                    def testLog = readFile('test.log')
+                    /*def testLog = readFile('test.log')
 
                     mail to: "prettybluesky135@gmail.com",
                          subject: "Test Stage: ${testStatus}",
@@ -117,7 +118,7 @@ pipeline{
 ===== Test Log =====
 
 ${testLog}
-"""
+"""*/
                 }
             }
         }
